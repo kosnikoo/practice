@@ -1,6 +1,7 @@
 package ci.nsu.moble.main
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,9 +30,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 
 // TODO: crate sealed class with 3 routes
+sealed class Screen(val route: String){
+    object Home : Screen("home")
+    object FirstScreen : Screen("first")
+    object SecondScreen : Screen("second")
+
+}
 
 class SecondActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +57,7 @@ class SecondActivity : ComponentActivity() {
 @Composable
 fun SecondActivityScreen() {
     // todo: create nav controller
+    val navController = rememberNavController()
     var selectedItem by remember { mutableStateOf(0) }
     val context = LocalContext.current
     var receivedText by remember { mutableStateOf("") }
@@ -84,6 +93,7 @@ fun SecondActivityScreen() {
 
                 onClick = {
                     // TODO: navigate to home screen by navController
+
                     selectedItem = 0
                 })
             NavigationBarItem(

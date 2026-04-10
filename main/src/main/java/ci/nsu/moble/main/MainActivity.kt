@@ -1,5 +1,6 @@
 package ci.nsu.moble.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,9 +50,14 @@ fun MainScreenActivity(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // TODO:  нужно добавить  TextField
+        TextField(value = text, onValueChange = {text = it}, label = {Text("Введите текст отправки")}, modifier = Modifier.fillMaxSize())
+
         Button(
             onClick = {
+
                 // TODO:  нужно добавить кнопку которая по клику открывает второе активити через интент
+                val intent = Intent(context, Screen.SecondScreen::class.java)
+                context.startActivity(intent)
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {
