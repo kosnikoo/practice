@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
@@ -30,7 +32,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ci.nsu.moble.main.ui.Screens.HomeScreen
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 
 // TODO: crate sealed class with 3 routes
@@ -71,6 +77,8 @@ fun SecondActivityScreen() {
                 IconButton(onClick = {
                     // TODO: create intent and start MainActivity
                     if (context is Activity) {
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
                         context.finish()
                     }
                 }) {
@@ -93,7 +101,7 @@ fun SecondActivityScreen() {
 
                 onClick = {
                     // TODO: navigate to home screen by navController
-
+                    navController.navigate(Screen.Home.route)
                     selectedItem = 0
                 })
             NavigationBarItem(
@@ -103,6 +111,7 @@ fun SecondActivityScreen() {
 
                 onClick = {
                     // TODO: navigate to screen one
+                    navController.navigate(Screen.FirstScreen.route)
                     selectedItem = 1
                 })
             NavigationBarItem(
@@ -111,6 +120,7 @@ fun SecondActivityScreen() {
                 selected = selectedItem == 2,
                 onClick = {
                     // TODO: navigate to screen two
+                    navController.navigate(Screen.SecondScreen.route)
                     selectedItem = 2
                 })
         }
@@ -118,8 +128,39 @@ fun SecondActivityScreen() {
         // TODO: create a nav graph with 3 screens
         // NavHost() {}
         // composable(Screen.Home.route) { HomeScreen() }
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.FirstScreen.route) { FirstScreen() }
+            composable(Screen.SecondScreen.route) { SecondScreen() }
+        }
     }
 }
+
+@Composable
+fun HomeScreen() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text("Home Screen", modifier = Modifier.padding(16.dp))
+    }
+}
+
+@Composable
+fun FirstScreen() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text("First Screen", modifier = Modifier.padding(16.dp))
+    }
+}
+
+@Composable
+fun SecondScreen() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text("Second Screen", modifier = Modifier.padding(16.dp))
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable

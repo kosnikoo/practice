@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-// TODO:  here is to open the second activity
+
 @Composable
 fun MainScreenActivity(modifier: Modifier = Modifier) {
     var text by remember { mutableStateOf("") }
@@ -49,14 +50,17 @@ fun MainScreenActivity(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // TODO:  нужно добавить  TextField
-        TextField(value = text, onValueChange = {text = it}, label = {Text("Введите текст отправки")}, modifier = Modifier.fillMaxSize())
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Введите текст отправки") },
+            modifier = Modifier.fillMaxWidth()   // ← исправлено
+        )
 
         Button(
             onClick = {
-
-                // TODO:  нужно добавить кнопку которая по клику открывает второе активити через интент
-                val intent = Intent(context, Screen.SecondScreen::class.java)
+                val intent = Intent(context, SecondActivity::class.java)
+                intent.putExtra("text_data", text)
                 context.startActivity(intent)
             },
             modifier = Modifier.padding(top = 16.dp)
